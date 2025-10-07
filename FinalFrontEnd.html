@@ -85,40 +85,115 @@
       </section>
 
       <!-- CATALOGO / CLIENTE -->
-      <section id="catalogo" class="card-skel hidden">
-        <h3>Catálogo — Quesos disponibles</h3>
-        <p class="tiny">Agrega al carrito y realiza pedidos.</p>
+<section id="catalogo" class="card-skel hidden">
+  <h3>Catálogo — Quesos disponibles</h3>
+  <p class="tiny">Agrega al carrito y realiza pedidos.</p>
 
-        <div class="row" id="catalogoGrid"></div>
+  <div class="row" id="catalogoGrid"></div>
 
-        <div class="card-skel mt-3">
-          <h5>Tu carrito</h5>
-          <ul id="carritoList" class="list-group mb-2"></ul>
-          <div class="d-flex gap-2">
-            <button id="btnCheckout" class="btn btn-primary">Confirmar pedido</button>
-            <button id="btnClearCart" class="btn btn-outline-secondary">Vaciar carrito</button>
-          </div>
-          <div id="msgCheckout" class="mt-2"></div>
-        </div>
-      </section>
+  <div class="card-skel mt-3">
+    <h5>Tu carrito</h5>
+    <ul id="carritoList" class="list-group mb-2"></ul>
+    <div class="d-flex gap-2">
+      <button id="btnCheckout" class="btn btn-primary">Confirmar pedido</button>
+      <button id="btnClearCart" class="btn btn-outline-secondary">Vaciar carrito</button>
+    </div>
+    <div id="msgCheckout" class="mt-2"></div>
+  </div>
+
+  <!-- Sección de pago (oculta hasta confirmar pedido) -->
+  <div id="seccionPago" style="display:none; margin-top:20px; border:1px solid #ccc; padding:15px; border-radius:8px;">
+    <h5>Pago de Pedido</h5>
+    <p>Total a pagar: <strong id="totalPago">$0</strong></p>
+
+    <label for="metodoPago">Seleccione método de pago:</label>
+    <select id="metodoPago" required class="form-select mb-2">
+      <option value="">-- Seleccione --</option>
+      <option value="tarjeta">Tarjeta de crédito / débito</option>
+      <option value="transferencia">Transferencia bancaria</option>
+      <option value="efectivo">Pago en efectivo al recibir</option>
+    </select>
+
+    <button id="btnPagar" class="btn btn-success">Pagar</button>
+    <p id="mensajePago" class="mt-2 fw-bold"></p>
+  </div>
+</section>
+
+<script>
+// Simulación del carrito y flujo de pago
+function calcularTotalCarrito() {
+  if (!currentUser) return 0;
+  const key = `lc_cart_${currentUser.email}`;
+  const cart = load(key, []);
+  const productos = load('lc_products', []);
+  return cart.reduce((total, item) => {
+    const prod = productos.find(p => p.id === item.id);
+    return total + (prod ? prod.price * item.qty : 0);
+  }, 0);
+}
+
+document.getElementById("btnCheckout").addEventListener("click", () => {
+  const totalCarrito = calcularTotalCarrito();
+  if (totalCarrito <= 0) {
+    document.getElementById("msgCheckout").innerHTML = "<span style='color:red'>Tu carrito está vacío.</span>";
+    return;
+  }
+
+  document.getElementById("msgCheckout").innerHTML = "<span style='color:green'>Pedido confirmado. Proceda al pago.</span>";
+  document.getElementById("seccionPago").style.display = "block";
+  document.getElementById("totalPago").textContent = `$${totalCarrito.toLocaleString("es-CL")}`;
+});
+
+document.getElementById("btnPagar").addEventListener("click", () => {
+  const metodo = document.getElementById("metodoPago").value;
+  const mensaje = document.getElementById("mensajePago");
+  const totalCarrito = calcularTotalCarrito();
+
+  if (!metodo) {
+    mensaje.style.color = "red";
+    mensaje.textContent = "Debe seleccionar un método de pago.";
+  } else {
+    mensaje.style.color = "green";
+    mensaje.textContent = `Pago realizado con éxito mediante ${document.querySelector("#metodoPago option:checked").textContent}. ¡Gracias por su compra!`;
+
+    // Registrar venta en la caja virtual
+    const caja = load('lc_caja', { saldo: 0, ventas: [] });
+    caja.saldo += totalCarrito;
+    caja.ventas.push({ monto: totalCarrito, productos: "Pedido del cliente", datos: metodo, fecha: nowISO() });
+    save('lc_caja', caja);
+
+    // Limpia el carrito tras el pago exitoso
+    save(`lc_cart_${currentUser.email}`, []);
+    document.getElementById("carritoList").innerHTML = "";
+    document.getElementById("msgCheckout").textContent = "";
+  }
+});
 
 
-      <!-- Sección de pago (inicialmente oculta) -->
-     <div id="seccionPago" style="display:none; margin-top:20px; border:1px solid #ccc; padding:15px; border-radius:8px;">
-     <h3>Pago de Pedido</h3>
-     <p>Total a pagar: <strong>$12.500</strong></p>
+document.getElementById("btnCheckout").addEventListener("click", () => {
+  // Simula la confirmación del pedido
+  document.getElementById("msgCheckout").innerHTML = "<span style='color:green'>Pedido confirmado. Proceda al pago.</span>";
+  document.getElementById("seccionPago").style.display = "block";
+  document.getElementById("totalPago").textContent = `$${totalCarrito.toLocaleString("es-CL")}`;
+});
 
-     <label for="metodoPago">Seleccione método de pago:</label>
-      <select id="metodoPago" required>
-     <option value="">-- Seleccione --</option>
-     <option value="tarjeta">Tarjeta de crédito / débito</option>
-     <option value="transferencia">Transferencia bancaria</option>
-     <option value="efectivo">Pago en efectivo al recibir</option>
-     </select>
+document.getElementById("btnPagar").addEventListener("click", () => {
+  const metodo = document.getElementById("metodoPago").value;
+  const mensaje = document.getElementById("mensajePago");
 
-     <button id="btnPagar">Pagar</button>
-     <p id="mensajePago" style="font-weight:bold; margin-top:10px;"></p>
-     </div>
+  if (!metodo) {
+    mensaje.style.color = "red";
+    mensaje.textContent = "Debe seleccionar un método de pago.";
+  } else {
+    mensaje.style.color = "green";
+    mensaje.textContent = `Pago realizado con éxito mediante ${document.querySelector("#metodoPago option:checked").textContent}. ¡Gracias por su compra!`;
+
+    // Limpia el carrito tras el pago exitoso
+    document.getElementById("carritoList").innerHTML = "";
+    document.getElementById("msgCheckout").textContent = "";
+  }
+});
+</script>
 
       <!-- MIS PEDIDOS (cliente) -->
       <section id="misPedidos" class="card-skel hidden">
