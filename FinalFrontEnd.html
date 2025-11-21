@@ -6,26 +6,100 @@
   <title>La Cava del Valle — Demo unificada</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <style>
-    :root { --sidebar-w: 260px; --brand:#a8bd4d; --cream:#fff8f0; --muted:#6c5b4a; }
-    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: #f5f2ef; color:#333; }
-    .app { display:flex; min-height:100vh; }
-    .sidebar {
-      width:var(--sidebar-w); background:var(--brand); color:#fff;
-      padding:1rem; flex-shrink:0;
-      display:flex; flex-direction:column; gap:0.5rem;
+    :root { 
+      --sidebar-w: 260px; 
+      --brand:#a8bd4d; 
+      --cream:#fff8f0; 
+      --muted:#6c5b4a; 
     }
-    .sidebar h2 { font-size:1.1rem; margin-bottom:0.4rem; color: #fff7e6; }
-    .nav-link { color:#ffeedd; cursor:pointer; display:block; padding:0.5rem 0.6rem; border-radius:6px; text-decoration:none; }
-    .nav-link:hover { background: rgba(255,255,255,0.06); color:#fff; }
-    .content { flex:1; padding:1.25rem; }
-    .card-skel { background:var(--cream); border-radius:10px; padding:1rem; border:1px solid rgba(0,0,0,0.06); margin-bottom:1rem; }
-    .hidden { display:none !important; }
-    .tiny { font-size:0.85rem; color:var(--muted); }
-    footer { color: #777; margin-top: 1rem; }
-    .pedido-item { display:flex; justify-content:space-between; align-items:center; gap:0.5rem; }
-    .brand-title { color:var(--brand); font-weight:700; }
-    .role-badge { background:#fff3e6; color:var(--brand); padding:0.15rem 0.4rem; border-radius:6px; font-weight:600; }
-    pre.small { background:#fff; padding:0.5rem; border-radius:6px; }
+    body { 
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; 
+      background: #f5f2ef; 
+      color:#333; 
+      margin: 0;
+      padding: 0;
+    }
+    .app { 
+      display:flex; 
+      min-height:100vh; 
+    }
+    .sidebar {
+      width:var(--sidebar-w); 
+      background:var(--brand); 
+      color:#fff;
+      padding:1rem; 
+      flex-shrink:0;
+      display:flex; 
+      flex-direction:column; 
+      gap:0.5rem;
+    }
+    .sidebar h2 { 
+      font-size:1.1rem; 
+      margin-bottom:0.4rem; 
+      color: #fff7e6; 
+    }
+    .nav-link { 
+      color:#ffeedd; 
+      cursor:pointer; 
+      display:block; 
+      padding:0.5rem 0.6rem; 
+      border-radius:6px; 
+      text-decoration:none; 
+    }
+    .nav-link:hover { 
+      background: rgba(255,255,255,0.06); 
+      color:#fff; 
+    }
+    .content { 
+      flex:1; 
+      padding:1.25rem; 
+    }
+    .card-skel { 
+      background:var(--cream); 
+      border-radius:10px; 
+      padding:1rem; 
+      border:1px solid rgba(0,0,0,0.06); 
+      margin-bottom:1rem; 
+    }
+    .hidden { 
+      display:none !important; 
+    }
+    .tiny { 
+      font-size:0.85rem; 
+      color:var(--muted); 
+    }
+    footer { 
+      color: #777; 
+      margin-top: 1rem; 
+    }
+    .pedido-item { 
+      display:flex; 
+      justify-content:space-between; 
+      align-items:center; 
+      gap:0.5rem; 
+    }
+    .brand-title { 
+      color:var(--brand); 
+      font-weight:700; 
+    }
+    .role-badge { 
+      background:#fff3e6; 
+      color:var(--brand); 
+      padding:0.15rem 0.4rem; 
+      border-radius:6px; 
+      font-weight:600; 
+    }
+    pre.small { 
+      background:#fff; 
+      padding:0.5rem; 
+      border-radius:6px; 
+    }
+    .product-card {
+      transition: transform 0.2s;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
   </style>
 </head>
 <body>
@@ -33,7 +107,7 @@
     <aside class="sidebar">
       <h2>La Cava del Valle</h2>
 
-      <div id="panel-login" class="">
+      <div id="panel-login">
         <div class="tiny">Inicia sesión</div>
         <input id="email_login" class="form-control form-control-sm mb-1" placeholder="correo@example.com" />
         <input id="pass_login" class="form-control form-control-sm mb-1" placeholder="contraseña" type="password"/>
@@ -56,6 +130,7 @@
         <hr style="border-color: rgba(255,255,255,0.08)"/>
         <button id="btnLogout" class="btn btn-sm btn-light">Cerrar sesión</button>
       </nav>
+    </aside>
 
     <main class="content">
       <div id="header" class="d-flex justify-content-between align-items-center mb-3">
@@ -68,121 +143,46 @@
           <div id="userRole" class="role-badge mt-1"></div>
         </div>
       </div>
-      <section id="home" class="card-skel hidden">
+      
+      <section id="home" class="card-skel">
         <h3>Bienvenido a La Cava</h3>
         <p class="tiny">Seleccione un módulo desde el menú lateral.</p>
       </section>
 
       <!-- CATALOGO / CLIENTE -->
-<section id="catalogo" class="card-skel hidden">
-  <h3>Catálogo — Quesos disponibles</h3>
-  <p class="tiny">Agrega al carrito y realiza pedidos.</p>
+      <section id="catalogo" class="card-skel hidden">
+        <h3>Catálogo — Quesos disponibles</h3>
+        <p class="tiny">Agrega al carrito y realiza pedidos.</p>
 
-  <div class="row" id="catalogoGrid"></div>
+        <div class="row" id="catalogoGrid"></div>
 
-  <div class="card-skel mt-3">
-    <h5>Tu carrito</h5>
-    <ul id="carritoList" class="list-group mb-2"></ul>
-    <div class="d-flex gap-2">
-      <button id="btnCheckout" class="btn btn-primary">Confirmar pedido</button>
-      <button id="btnClearCart" class="btn btn-outline-secondary">Vaciar carrito</button>
-    </div>
-    <div id="msgCheckout" class="mt-2"></div>
-  </div>
+        <div class="card-skel mt-3">
+          <h5>Tu carrito</h5>
+          <ul id="carritoList" class="list-group mb-2"></ul>
+          <div class="d-flex gap-2">
+            <button id="btnCheckout" class="btn btn-primary">Confirmar pedido</button>
+            <button id="btnClearCart" class="btn btn-outline-secondary">Vaciar carrito</button>
+          </div>
+          <div id="msgCheckout" class="mt-2"></div>
+        </div>
 
-  <!-- Sección de pago -->
-  <div id="seccionPago" style="display:none; margin-top:20px; border:1px solid #ccc; padding:15px; border-radius:8px;">
-    <h5>Pago de Pedido</h5>
-    <p>Total a pagar: <strong id="totalPago">$0</strong></p>
+        <!-- Sección de pago -->
+        <div id="seccionPago" class="card-skel mt-3 hidden">
+          <h5>Pago de Pedido</h5>
+          <p>Total a pagar: <strong id="totalPago">$0</strong></p>
 
-    <label for="metodoPago">Seleccione método de pago:</label>
-    <select id="metodoPago" required class="form-select mb-2">
-      <option value="">-- Seleccione --</option>
-      <option value="tarjeta">Tarjeta de crédito / débito</option>
-      <option value="transferencia">Transferencia bancaria</option>
-      <option value="efectivo">Pago en efectivo al recibir</option>
-    </select>
+          <label for="metodoPago">Seleccione método de pago:</label>
+          <select id="metodoPago" required class="form-select mb-2">
+            <option value="">-- Seleccione --</option>
+            <option value="tarjeta">Tarjeta de crédito / débito</option>
+            <option value="transferencia">Transferencia bancaria</option>
+            <option value="efectivo">Pago en efectivo al recibir</option>
+          </select>
 
-    <button id="btnPagar" class="btn btn-success">Pagar</button>
-    <p id="mensajePago" class="mt-2 fw-bold"></p>
-  </div>
-</section>
-
-<script>
-// Simulación del carrito y flujo de pago
-function calcularTotalCarrito() {
-  if (!currentUser) return 0;
-  const key = `lc_cart_${currentUser.email}`;
-  const cart = load(key, []);
-  const productos = load('lc_products', []);
-  return cart.reduce((total, item) => {
-    const prod = productos.find(p => p.id === item.id);
-    return total + (prod ? prod.price * item.qty : 0);
-  }, 0);
-}
-
-document.getElementById("btnCheckout").addEventListener("click", () => {
-  const totalCarrito = calcularTotalCarrito();
-  if (totalCarrito <= 0) {
-    document.getElementById("msgCheckout").innerHTML = "<span style='color:red'>Tu carrito está vacío.</span>";
-    return;
-  }
-
-  document.getElementById("msgCheckout").innerHTML = "<span style='color:green'>Pedido confirmado. Proceda al pago.</span>";
-  document.getElementById("seccionPago").style.display = "block";
-  document.getElementById("totalPago").textContent = `$${totalCarrito.toLocaleString("es-CL")}`;
-});
-
-document.getElementById("btnPagar").addEventListener("click", () => {
-  const metodo = document.getElementById("metodoPago").value;
-  const mensaje = document.getElementById("mensajePago");
-  const totalCarrito = calcularTotalCarrito();
-
-  if (!metodo) {
-    mensaje.style.color = "red";
-    mensaje.textContent = "Debe seleccionar un método de pago.";
-  } else {
-    mensaje.style.color = "green";
-    mensaje.textContent = `Pago realizado con éxito mediante ${document.querySelector("#metodoPago option:checked").textContent}. ¡Gracias por su compra!`;
-
-    // Registrar venta en la caja virtual
-    const caja = load('lc_caja', { saldo: 0, ventas: [] });
-    caja.saldo += totalCarrito;
-    caja.ventas.push({ monto: totalCarrito, productos: "Pedido del cliente", datos: metodo, fecha: nowISO() });
-    save('lc_caja', caja);
-
-    // Limpia el carrito tras el pago exitoso
-    save(`lc_cart_${currentUser.email}`, []);
-    document.getElementById("carritoList").innerHTML = "";
-    document.getElementById("msgCheckout").textContent = "";
-  }
-});
-
-
-document.getElementById("btnCheckout").addEventListener("click", () => {
-  // Simula la confirmación del pedido
-  document.getElementById("msgCheckout").innerHTML = "<span style='color:green'>Pedido confirmado. Proceda al pago.</span>";
-  document.getElementById("seccionPago").style.display = "block";
-  document.getElementById("totalPago").textContent = `$${totalCarrito.toLocaleString("es-CL")}`;
-});
-
-document.getElementById("btnPagar").addEventListener("click", () => {
-  const metodo = document.getElementById("metodoPago").value;
-  const mensaje = document.getElementById("mensajePago");
-
-  if (!metodo) {
-    mensaje.style.color = "red";
-    mensaje.textContent = "Debe seleccionar un método de pago.";
-  } else {
-    mensaje.style.color = "green";
-    mensaje.textContent = `Pago realizado con éxito mediante ${document.querySelector("#metodoPago option:checked").textContent}. ¡Gracias por su compra!`;
-
-    // Limpia el carrito tras el pago exitoso
-    document.getElementById("carritoList").innerHTML = "";
-    document.getElementById("msgCheckout").textContent = "";
-  }
-});
-</script>
+          <button id="btnPagar" class="btn btn-success">Pagar</button>
+          <p id="mensajePago" class="mt-2 fw-bold"></p>
+        </div>
+      </section>
 
       <!-- MIS PEDIDOS (cliente) -->
       <section id="misPedidos" class="card-skel hidden">
@@ -334,455 +334,621 @@ document.getElementById("btnPagar").addEventListener("click", () => {
         </div>
         <div id="salidaEst" class="mt-3"></div>
       </section>
-
     </main>
   </div>
 
-<script>
-/*
-  SPA behavior and modules wiring
-  - localStorage keys:
-      lc_users, lc_products, lc_cart_{email}, lc_orders, lc_anulaciones, lc_caja, lc_notifs, lc_assignments
-  - default test accounts:
-      dueno@quesos.com -> role: dueno
-      cocina@quesos.com -> role: cocina
-      logistica@quesos.com -> role: logistica
-      cliente@quesos.com -> role: cliente
-  - pass for all: 1234
-*/
+  <script>
+    /*
+      SPA behavior and modules wiring
+      - localStorage keys:
+          lc_users, lc_products, lc_cart_{email}, lc_orders, lc_anulaciones, lc_caja, lc_notifs, lc_assignments
+      - default test accounts:
+          dueno@quesos.com -> role: dueno
+          cocina@quesos.com -> role: cocina
+          logistica@quesos.com -> role: logistica
+          cliente@quesos.com -> role: cliente
+      - pass for all: 1234
+    */
 
-// ---------- Utilities ----------
-const $ = id => document.getElementById(id);
-const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
-const load = (k, d=[]) => { try { const s = localStorage.getItem(k); return s ? JSON.parse(s) : d; } catch(e){ return d; } }
-const nowISO = ()=> new Date().toISOString();
-const toast = (msg) => alert(msg); // simple feedback
+    // ---------- Utilities ----------
+    const $ = id => document.getElementById(id);
+    const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+    const load = (k, d=[]) => { 
+      try { 
+        const s = localStorage.getItem(k); 
+        return s ? JSON.parse(s) : d; 
+      } catch(e){ 
+        return d; 
+      } 
+    };
+    const nowISO = () => new Date().toISOString();
+    const toast = (msg) => alert(msg); // simple feedback
 
-// ---------- Init default data if not present ----------
-(function initDefaults(){
-  if(!localStorage.getItem('lc_users')) {
-    const users = [
-      { email:'dueno@quesos.com', pass:'1234', role:'dueno' },
-      { email:'cocina@quesos.com', pass:'1234', role:'cocina' },
-      { email:'logistica@quesos.com', pass:'1234', role:'logistica' },
-      { email:'cliente@quesos.com', pass:'1234', role:'cliente' }
-    ];
-    save('lc_users', users);
-  }
-  if(!localStorage.getItem('lc_products')) {
-    // products: cheeses
-    const prods = [
-      { id:'q1', name:'Queso de Cabra Ahumado', cat:'curados', price:8000, stock:12 },
-      { id:'q2', name:'Queso Mantecoso Artesanal', cat:'curados', price:6500, stock:20 },
-      { id:'q3', name:'Queso Azul Madurado', cat:'curados', price:12000, stock:6 },
-      { id:'q4', name:'Queso Fresco de Leche de Vaca', cat:'frescos', price:4000, stock:30 },
-      { id:'q5', name:'Tabla de Degustación (mixta)', cat:'mixtos', price:15000, stock:8 },
-    ];
-    save('lc_products', prods);
-  }
-  if(!localStorage.getItem('lc_orders')) save('lc_orders', []); // central orders
-  if(!localStorage.getItem('lc_anulaciones')) save('lc_anulaciones', []);
-  if(!localStorage.getItem('lc_caja')) save('lc_caja', { saldo: 500000, ventas: [] });
-  if(!localStorage.getItem('lc_notifs')) save('lc_notifs', []);
-  if(!localStorage.getItem('lc_assignments')) save('lc_assignments', []);
-})();
+    // ---------- Init default data if not present ----------
+    (function initDefaults(){
+      if(!localStorage.getItem('lc_users')) {
+        const users = [
+          { email:'dueno@quesos.com', pass:'1234', role:'dueno' },
+          { email:'cocina@quesos.com', pass:'1234', role:'cocina' },
+          { email:'logistica@quesos.com', pass:'1234', role:'logistica' },
+          { email:'cliente@quesos.com', pass:'1234', role:'cliente' }
+        ];
+        save('lc_users', users);
+      }
+      if(!localStorage.getItem('lc_products')) {
+        // products: cheeses
+        const prods = [
+          { id:'q1', name:'Queso de Cabra Ahumado', cat:'curados', price:8000, stock:12 },
+          { id:'q2', name:'Queso Mantecoso Artesanal', cat:'curados', price:6500, stock:20 },
+          { id:'q3', name:'Queso Azul Madurado', cat:'curados', price:12000, stock:6 },
+          { id:'q4', name:'Queso Fresco de Leche de Vaca', cat:'frescos', price:4000, stock:30 },
+          { id:'q5', name:'Tabla de Degustación (mixta)', cat:'mixtos', price:15000, stock:8 },
+        ];
+        save('lc_products', prods);
+      }
+      if(!localStorage.getItem('lc_orders')) save('lc_orders', []); // central orders
+      if(!localStorage.getItem('lc_anulaciones')) save('lc_anulaciones', []);
+      if(!localStorage.getItem('lc_caja')) save('lc_caja', { saldo: 500000, ventas: [] });
+      if(!localStorage.getItem('lc_notifs')) save('lc_notifs', []);
+      if(!localStorage.getItem('lc_assignments')) save('lc_assignments', []);
+    })();
 
-// ---------- App state ----------
-let currentUser = null;
+    // ---------- App state ----------
+    let currentUser = null;
 
-// ---------- UI pieces ----------
-const sections = ['home','catalogo','misPedidos','anulacion','ordenes','listaPedidos','asignaciones','cajaVirtual','reportesModule','estadisticas'];
-function showSection(id) {
-  sections.forEach(s => $(s).classList.add('hidden'));
-  if(id) $(id).classList.remove('hidden');
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-
-// ---------- Menu / Login handling ----------
-function buildMenuForRole(role){
-  const menu = $('menu-links');
-  menu.innerHTML = '';
-  // universal home
-  const addLink = (label, target) => {
-    const a = document.createElement('a');
-    a.className='nav-link';
-    a.textContent = label;
-    a.onclick = () => { showSection(target); };
-    menu.appendChild(a);
-  };
-
-  addLink('Inicio', 'home');
-
-  if(role === 'cliente') {
-    addLink('Catálogo', 'catalogo');
-    addLink('Mis pedidos', 'misPedidos');
-    addLink('Anular pedido', 'anulacion');
-  } else if(role === 'cocina') {
-    addLink('Pedidos (llegada)', 'listaPedidos');
-    addLink('Órdenes de despacho', 'ordenes');
-  } else if(role === 'logistica') {
-    addLink('Pedidos (llegada)', 'listaPedidos');
-    addLink('Asignaciones', 'asignaciones');
-  } else if(role === 'dueno') {
-    addLink('Reportes', 'reportesModule');
-    addLink('Estadísticas', 'estadisticas');
-    addLink('Caja Virtual', 'cajaVirtual');
-  }
-  // always let owner see all
-  if(role === 'dueno') {
-    addLink('Catálogo', 'catalogo');
-    addLink('Pedidos', 'listaPedidos');
-    addLink('Órdenes', 'ordenes');
-    addLink('Asignaciones', 'asignaciones');
-    addLink('Anular pedido', 'anulacion');
-  }
-  $('menu').classList.remove('hidden');
-}
-
-// login / register handlers
-$('btnLogin').addEventListener('click', ()=>{
-  const email = $('email_login').value.trim();
-  const pass = $('pass_login').value;
-  const users = load('lc_users', []);
-  const u = users.find(x => x.email === email && x.pass === pass);
-  if(!u) { alert('Credenciales inválidas. Usa las cuentas de prueba o regístrate.'); return; }
-  currentUser = u;
-  $('userEmail').innerText = u.email;
-  $('userRole').innerText = u.role;
-  $('userInfo').classList.remove('hidden');
-  document.querySelector('#panel-login').classList.add('hidden');
-  buildMenuForRole(u.role);
-  // show default section for role
-  if(u.role==='cliente') showSection('catalogo');
-  else if(u.role==='cocina') showSection('listaPedidos');
-  else if(u.role==='logistica') showSection('asignaciones');
-  else showSection('home');
-  populateAllViews();
-});
-
-$('btnRegister').addEventListener('click', ()=>{
-  const email = $('email_login').value.trim();
-  const pass = $('pass_login').value;
-  if(!email || !pass) { alert('Completa email y contraseña para registrar.'); return; }
-  const users = load('lc_users', []);
-  if(users.find(x=>x.email===email)){ alert('El email ya está en uso'); return; }
-  users.push({ email, pass, role:'cliente' });
-  save('lc_users', users);
-  alert('Usuario registrado. Inicia sesión con tus credenciales.');
-});
-
-// logout
-$('btnLogout').addEventListener('click', ()=>{
-  currentUser = null;
-  document.querySelector('#panel-login').classList.remove('hidden');
-  $('menu').classList.add('hidden');
-  $('userInfo').classList.add('hidden');
-  document.querySelectorAll('.module').forEach(x=>x.classList.add('hidden'));
-  showSection('home');
-});
-
-// ---------- Populate catalog and cart ----------
-function populateCatalog(){
-  const prods = load('lc_products', []);
-  const grid = $('catalogoGrid');
-  grid.innerHTML = '';
-  prods.forEach(p => {
-    const col = document.createElement('div'); col.className='col-md-4';
-    col.innerHTML = `
-      <div class="card p-2 mb-2">
-        <h5>${p.name}</h5>
-        <div class="tiny">Categoría: ${p.cat} / Stock: ${p.stock}</div>
-        <div class="mt-2"><strong>$ ${p.price.toLocaleString()}</strong></div>
-        <div class="mt-2 d-flex gap-2">
-          <input type="number" class="form-control form-control-sm qty-${p.id}" value="1" style="max-width:80px;">
-          <button class="btn btn-sm btn-primary add-${p.id}">Agregar</button>
-        </div>
-      </div>`;
-    grid.appendChild(col);
-    // attach handler
-    col.querySelector(`.add-${p.id}`).addEventListener('click', ()=>{
-      const q = Number(col.querySelector(`.qty-${p.id}`).value) || 1;
-      addToCart(p.id, q);
-    });
-  });
-}
-
-function addToCart(productId, qty){
-  if(!currentUser){ alert('Debes iniciar sesión como cliente para comprar.'); return; }
-  const key = `lc_cart_${currentUser.email}`;
-  const cart = load(key, []);
-  const prod = load('lc_products', []).find(x=>x.id===productId);
-  const existing = cart.find(i=>i.id===productId);
-  if(existing) existing.qty += qty;
-  else cart.push({ id:productId, qty });
-  save(key, cart);
-  renderCart();
-  toast('Agregado al carrito');
-}
-
-function renderCart(){
-  if(!currentUser) return;
-  const key = `lc_cart_${currentUser.email}`;
-  const cart = load(key, []);
-  const out = $('carritoList');
-  out.innerHTML = '';
-  if(cart.length===0) { out.innerHTML='<li class="list-group-item tiny">Carrito vacío</li>'; return; }
-  cart.forEach(it=>{
-    const prod = load('lc_products', []).find(p=>p.id===it.id);
-    const li = document.createElement('li'); li.className='list-group-item d-flex justify-content-between align-items-center';
-    li.innerHTML = `<div>${prod.name} x${it.qty}</div><div><button class="btn btn-sm btn-outline-danger rem">Quitar</button></div>`;
-    li.querySelector('.rem').addEventListener('click', ()=> {
-      const idx = cart.findIndex(c=>c.id===it.id); cart.splice(idx,1); save(key,cart); renderCart();
-    });
-    out.appendChild(li);
-  });
-}
-
-// Checkout -> create order
-$('btnCheckout').addEventListener('click', ()=>{
-  if(!currentUser){ alert('Inicia sesión como cliente para confirmar pedido'); return; }
-  const key = `lc_cart_${currentUser.email}`;
-  const cart = load(key, []);
-  if(cart.length===0){ alert('Carrito vacío'); return; }
-  // create order
-  const orders = load('lc_orders', []);
-  const products = load('lc_products', []);
-  const id = 'ord' + Math.floor(Math.random()*9000+1000);
-  const items = cart.map(it => { const p = products.find(x=>x.id===it.id); return { id:p.id, name:p.name, qty:it.qty, price:p.price }; });
-  const total = items.reduce((s,i)=>s+i.price*i.qty,0);
-  const order = { id, customer: currentUser.email, items, total, status:'pendiente', created: nowISO() };
-  orders.push(order); save('lc_orders', orders);
-  // clear cart
-  save(key, []);
-  renderCart();
-  toast('Pedido creado: ' + id);
-  populateAllViews();
-});
-
-// clear cart
-$('btnClearCart').addEventListener('click', ()=>{
-  if(!currentUser) return;
-  save(`lc_cart_${currentUser.email}`, []);
-  renderCart();
-});
-
-// render client's orders
-function renderMyOrders(){
-  if(!currentUser) return;
-  const orders = load('lc_orders', []);
-  const mine = orders.filter(o=>o.customer===currentUser.email);
-  const ul = $('misPedidosList');
-  ul.innerHTML = '';
-  if(mine.length===0){ ul.innerHTML = '<li class="list-group-item tiny">No tienes pedidos</li>'; return; }
-  mine.forEach(o=>{
-    const li = document.createElement('li'); li.className='list-group-item';
-    li.innerHTML = `<div><strong>${o.id}</strong> - <span class="tiny">${o.status}</span></div>
-      <div class="tiny">Total: $${o.total.toLocaleString()}</div>`;
-    // if pending, allow cancellation (opens anulacion)
-    if(o.status==='pendiente') {
-      const btn = document.createElement('button'); btn.className='btn btn-sm btn-outline-danger mt-2'; btn.textContent='Solicitar anulacion';
-      btn.onclick = ()=> { // preselect item in anulacion module
-        $('anulaPedidoSel').value = `${o.id}|pendiente`;
-        showSection('anulacion');
-      };
-      li.appendChild(btn);
+    // ---------- UI pieces ----------
+    const sections = ['home','catalogo','misPedidos','anulacion','ordenes','listaPedidos','asignaciones','cajaVirtual','reportesModule','estadisticas'];
+    function showSection(id) {
+      sections.forEach(s => $(s).classList.add('hidden'));
+      if(id) $(id).classList.remove('hidden');
+      window.scrollTo({top:0, behavior:'smooth'});
     }
-    ul.appendChild(li);
-  });
-}
 
-// ---------- ANULACION LÓGICA ----------
-$('btnAnularPedido').addEventListener('click', ()=>{
-  const sel = $('anulaPedidoSel').value;
-  if(!sel) { $('msgAnulacion').innerHTML = '<div class="alert alert-warning">Selecciona un pedido</div>'; return; }
-  const [orderId, status] = sel.split('|');
-  const motivo = $('anulaMotivoSel').value;
-  if(!motivo) { $('msgAnulacion').innerHTML = '<div class="alert alert-danger">Debe ingresar un motivo para anular</div>'; return; }
-  if(status === 'enviado') { $('msgAnulacion').innerHTML = '<div class="alert alert-danger">No se puede anular este pedido (ya enviado)</div>'; return; }
-  if(!confirm(`Confirma anular ${orderId}?\nMotivo: ${motivo}`)) { $('msgAnulacion').innerHTML = '<div class="alert alert-secondary">Cancelación de anulación: el pedido sigue activo</div>'; return; }
-  // perform annulation -> set order status cancelled and save motivo
-  const orders = load('lc_orders', []);
-  const idx = orders.findIndex(o=>o.id===orderId);
-  if(idx===-1){ $('msgAnulacion').innerHTML = '<div class="alert alert-danger">Pedido no encontrado</div>'; return; }
-  orders[idx].status = 'anulado';
-  save('lc_orders', orders);
-  // register anulacion record
-  const anul = load('lc_anulaciones', []);
-  anul.push({ orderId, motivo, fecha: nowISO(), by: currentUser ? currentUser.email : 'sistema' });
-  save('lc_anulaciones', anul);
-  $('msgAnulacion').innerHTML = `<div class="alert alert-success">Pedido ${orderId} anulado. Motivo: ${motivo}</div>`;
-  populateAllViews();
-});
+    // ---------- Menu / Login handling ----------
+    function buildMenuForRole(role){
+      const menu = $('menu-links');
+      menu.innerHTML = '';
+      // universal home
+      const addLink = (label, target) => {
+        const a = document.createElement('a');
+        a.className='nav-link';
+        a.textContent = label;
+        a.onclick = () => { showSection(target); };
+        menu.appendChild(a);
+      };
 
-// ---------- ORDENES / IMPRESION ----------
-$('btnGenerarOrden').addEventListener('click', ()=>{
-  $('msgOrdenes').innerHTML = '';
-  const pendientes = Number($('pendientesCount').value);
-  const impresora = $('impresoraOk').checked;
-  if(pendientes <= 0){ $('msgOrdenes').innerHTML = '<div class="alert alert-warning">No hay pedidos para generar</div>'; return; }
-  if(!impresora){ $('msgOrdenes').innerHTML = '<div class="alert alert-danger">Error de impresión, revise la impresora</div>'; return; }
-  // simulate printing and register printed order
-  $('msgOrdenes').innerHTML = `<div class="alert alert-success">Orden impresa correctamente. Pedidos impresos: ${pendientes}</div>`;
-});
-$('btnImprimirLote').addEventListener('click', ()=> alert('Simulación: impresión en lote iniciada'));
+      addLink('Inicio', 'home');
 
-// ---------- LISTA DE PEDIDOS (orden llegada) ----------
-function populateColaFromOrders() {
-  const ul = $('colaPedidos'); ul.innerHTML = '';
-  const orders = load('lc_orders', []);
-  // pending orders, newest first (order by created desc)
-  const pend = orders.filter(o=>o.status==='pendiente').sort((a,b)=> new Date(b.created) - new Date(a.created));
-  if(pend.length===0){ ul.innerHTML='<li class="list-group-item tiny">No hay pedidos pendientes</li>'; return; }
-  pend.forEach(o=>{
-    const li = document.createElement('li');
-    li.className='list-group-item pedido-item';
-    li.innerHTML = `<div><strong>${o.id}</strong> — ${o.customer} — $${o.total.toLocaleString()}</div>
-      <div><button class="btn btn-sm btn-danger">Completar</button></div>`;
-    li.querySelector('button').addEventListener('click', ()=>{
-      // mark order as en_proceso or entregado
-      const ordersAll = load('lc_orders', []);
-      const idx = ordersAll.findIndex(x=>x.id===o.id);
-      if(idx>-1){ ordersAll[idx].status='completado'; save('lc_orders', ordersAll); populateColaFromOrders(); populateAllViews(); }
+      if(role === 'cliente') {
+        addLink('Catálogo', 'catalogo');
+        addLink('Mis pedidos', 'misPedidos');
+        addLink('Anular pedido', 'anulacion');
+      } else if(role === 'cocina') {
+        addLink('Pedidos (llegada)', 'listaPedidos');
+        addLink('Órdenes de despacho', 'ordenes');
+      } else if(role === 'logistica') {
+        addLink('Pedidos (llegada)', 'listaPedidos');
+        addLink('Asignaciones', 'asignaciones');
+      } else if(role === 'dueno') {
+        addLink('Reportes', 'reportesModule');
+        addLink('Estadísticas', 'estadisticas');
+        addLink('Caja Virtual', 'cajaVirtual');
+      }
+      // always let owner see all
+      if(role === 'dueno') {
+        addLink('Catálogo', 'catalogo');
+        addLink('Pedidos', 'listaPedidos');
+        addLink('Órdenes', 'ordenes');
+        addLink('Asignaciones', 'asignaciones');
+        addLink('Anular pedido', 'anulacion');
+      }
+      $('menu').classList.remove('hidden');
+    }
+
+    // login / register handlers
+    $('btnLogin').addEventListener('click', ()=>{
+      const email = $('email_login').value.trim();
+      const pass = $('pass_login').value;
+      const users = load('lc_users', []);
+      const u = users.find(x => x.email === email && x.pass === pass);
+      if(!u) { 
+        alert('Credenciales inválidas. Usa las cuentas de prueba o regístrate.'); 
+        return; 
+      }
+      currentUser = u;
+      $('userEmail').innerText = u.email;
+      $('userRole').innerText = u.role;
+      $('userInfo').classList.remove('hidden');
+      document.querySelector('#panel-login').classList.add('hidden');
+      buildMenuForRole(u.role);
+      // show default section for role
+      if(u.role==='cliente') showSection('catalogo');
+      else if(u.role==='cocina') showSection('listaPedidos');
+      else if(u.role==='logistica') showSection('asignaciones');
+      else showSection('home');
+      populateAllViews();
     });
-    ul.appendChild(li);
-  });
-}
-$('btnSimularPedido').addEventListener('click', ()=>{
-  // create random order and insert
-  const prods = load('lc_products', []);
-  const pick = prods[Math.floor(Math.random()*prods.length)];
-  const ords = load('lc_orders', []);
-  const id = 'ord' + Math.floor(Math.random()*9000+1000);
-  const order = { id, customer: `walkin@local`, items: [{id:pick.id, name:pick.name, qty:1, price:pick.price}], total: pick.price, status:'pendiente', created: nowISO() };
-  ords.push(order); save('lc_orders', ords);
-  populateColaFromOrders(); populateAllViews();
-});
-$('btnVaciarPedidos').addEventListener('click', ()=>{
-  // mark all pending as cancelled for demo
-  const ords = load('lc_orders', []);
-  ords.forEach(o=>{ if(o.status==='pendiente') o.status='cancelado'; });
-  save('lc_orders', ords);
-  populateColaFromOrders();
-});
 
-// ---------- ASIGNACION A REPARTIDORES ----------
-$('btnAsignar').addEventListener('click', ()=>{
-  $('msgAsignacion').innerHTML='';
-  const pedidoVal = $('asigPedido').value;
-  const repartidor = $('asigRepartidor').value;
-  if(!pedidoVal){ $('msgAsignacion').innerHTML='<div class="alert alert-warning">Selecciona un pedido</div>'; return; }
-  // simulate coverage: r3 cannot serve pedido with id containing '002'
-  const orders = load('lc_orders', []);
-  const ord = orders.find(o=>o.id===pedidoVal);
-  if(!ord){ $('msgAsignacion').innerHTML='<div class="alert alert-danger">Pedido no encontrado</div>'; return; }
-  if(repartidor==='r3' && pedidoVal.includes('002')) { $('msgAsignacion').innerHTML='<div class="alert alert-danger">Pedido fuera de cobertura</div>'; return; }
-  // simulate no repartidores available if r3 selected (limited) -> show no disponibles
-  if(repartidor==='r3') { $('msgAsignacion').innerHTML='<div class="alert alert-warning">No hay repartidores disponibles</div>'; return; }
-  // assign
-  const assignments = load('lc_assignments', []);
-  assignments.push({ orderId: pedidoVal, repartidor, fecha:nowISO() });
-  save('lc_assignments', assignments);
-  // update order status
-  const idx = orders.findIndex(x=>x.id===pedidoVal); if(idx>-1){ orders[idx].status='asignado'; save('lc_orders', orders); }
-  $('msgAsignacion').innerHTML='<div class="alert alert-success">Asignación exitosa. Repartidor: '+repartidor+'</div>';
-  populateAllViews();
-});
+    $('btnRegister').addEventListener('click', ()=>{
+      const email = $('email_login').value.trim();
+      const pass = $('pass_login').value;
+      if(!email || !pass) { 
+        alert('Completa email y contraseña para registrar.'); 
+        return; 
+      }
+      const users = load('lc_users', []);
+      if(users.find(x=>x.email===email)){ 
+        alert('El email ya está en uso'); 
+        return; 
+      }
+      users.push({ email, pass, role:'cliente' });
+      save('lc_users', users);
+      alert('Usuario registrado. Inicia sesión con tus credenciales.');
+    });
 
-// ---------- CAJA VIRTUAL ----------
-$('btnRegistrarCaja').addEventListener('click', ()=>{
-  $('msgCaja').innerHTML='';
-  const monto = Number($('cajaMonto').value);
-  const productos = $('cajaProductos').value.trim();
-  const datos = $('cajaPago').value.trim();
-  if(!monto || !productos || !datos) { $('msgCaja').innerHTML='<div class="alert alert-warning">Completa todos los campos</div>'; return; }
-  if(monto>500000){ $('msgCaja').innerHTML='<div class="alert alert-danger">Error al registrar venta, intente nuevamente</div>'; return; }
-  const caja = load('lc_caja', { saldo:0, ventas:[] });
-  caja.saldo = (caja.saldo||0) + monto;
-  caja.ventas.push({ monto, productos, datos, fecha: nowISO() });
-  save('lc_caja', caja);
-  $('msgCaja').innerHTML = `<div class="alert alert-success">Registro exitoso. Nuevo saldo: $${caja.saldo.toLocaleString()}</div>`;
-});
-$('btnRevisarCaja').addEventListener('click', ()=>{
-  const caja = load('lc_caja', { saldo:0, ventas:[] });
-  $('msgCaja').innerHTML = `<div class="alert alert-info">Saldo actual: $${caja.saldo.toLocaleString()} (Ventas: ${caja.ventas.length})</div>`;
-});
+    // logout
+    $('btnLogout').addEventListener('click', ()=>{
+      currentUser = null;
+      document.querySelector('#panel-login').classList.remove('hidden');
+      $('menu').classList.add('hidden');
+      $('userInfo').classList.add('hidden');
+      document.querySelectorAll('.module').forEach(x=>x.classList.add('hidden'));
+      showSection('home');
+    });
 
-// ---------- REPORTES y EXPORTACIÓN ----------
-$('btnGenReporte').addEventListener('click', ()=>{
-  const periodo = $('repPeriodo').value;
-  const rango = $('repRango').value.trim();
-  if(!periodo || !rango){ alert('Selecciona período y rango'); return; }
-  let text = '';
-  if(periodo==='diario') text = `Reporte Diario (${rango}):\nTotal ventas: $1.200\nNº pedidos: 5\nProductos vendidos: 12`;
-  else if(periodo==='semanal') text = `Reporte Semana (${rango}):\nTotal ventas: $8.500\nNº pedidos: 32`;
-  else text = `Reporte Mes (${rango}):\nTotal ventas: $34.000\nNº pedidos: 120`;
-  $('salidaReporte').innerHTML = `<pre class="small">${text}</pre>`;
-});
-$('btnExport').addEventListener('click', ()=>{
-  $('msgExport').innerHTML='';
-  const fmt = $('exportFmt').value;
-  if(!fmt){ alert('Selecciona formato'); return; }
-  const hasReport = !!$('salidaReporte').innerHTML.trim();
-  if(!hasReport){ $('msgExport').innerHTML = '<div class="alert alert-danger">No hay datos para exportar</div>'; return; }
-  if(fmt==='pdf') $('msgExport').innerHTML = '<div class="alert alert-success">Archivo PDF generado con éxito (simulado)</div>';
-  else $('msgExport').innerHTML = '<div class="alert alert-success">Archivo XLSX generado con éxito (simulado)</div>';
-});
+    // ---------- Populate catalog and cart ----------
+    function populateCatalog(){
+      const prods = load('lc_products', []);
+      const grid = $('catalogoGrid');
+      grid.innerHTML = '';
+      prods.forEach(p => {
+        const col = document.createElement('div'); 
+        col.className='col-md-4 mb-3';
+        col.innerHTML = `
+          <div class="card p-2 product-card">
+            <h5>${p.name}</h5>
+            <div class="tiny">Categoría: ${p.cat} / Stock: ${p.stock}</div>
+            <div class="mt-2"><strong>$ ${p.price.toLocaleString()}</strong></div>
+            <div class="mt-2 d-flex gap-2">
+              <input type="number" class="form-control form-control-sm qty-${p.id}" value="1" min="1" max="${p.stock}" style="max-width:80px;">
+              <button class="btn btn-sm btn-primary add-${p.id}">Agregar</button>
+            </div>
+          </div>`;
+        grid.appendChild(col);
+        // attach handler
+        col.querySelector(`.add-${p.id}`).addEventListener('click', ()=>{
+          const q = Number(col.querySelector(`.qty-${p.id}`).value) || 1;
+          addToCart(p.id, q);
+        });
+      });
+    }
 
-// ---------- ESTADISTICAS ----------
-$('btnVerEst').addEventListener('click', ()=>{
-  const periodo = $('estadPeriodo').value;
-  const cat = $('estadCat').value;
-  if(!periodo){ alert('Selecciona periodo'); return; }
-  if(periodo==='diario') $('salidaEst').innerHTML = `<div class="alert alert-info">Ingresos por día (ej): 01/09/2025 -> $1.200 | Pedidos: 5</div>`;
-  else $('salidaEst').innerHTML = `<div class="alert alert-info">Ingresos semanales del mes (ej): Semana1 $8.000, Semana2 $9.000</div>`;
-  if(cat!=='todas') $('salidaEst').innerHTML += `<div class="alert alert-warning mt-2">Filtrado por: ${cat}</div>`;
-});
+    function addToCart(productId, qty){
+      if(!currentUser){ 
+        alert('Debes iniciar sesión como cliente para comprar.'); 
+        return; 
+      }
+      const key = `lc_cart_${currentUser.email}`;
+      const cart = load(key, []);
+      const prod = load('lc_products', []).find(x=>x.id===productId);
+      const existing = cart.find(i=>i.id===productId);
+      if(existing) existing.qty += qty;
+      else cart.push({ id:productId, qty });
+      save(key, cart);
+      renderCart();
+      toast('Agregado al carrito');
+    }
 
-// ---------- Helpers to populate various selects and lists ----------
-function populateAllViews(){
-  // catalog
-  populateCatalog();
-  renderCart();
-  renderMyOrders();
-  populateAnulacionSelect();
-  populateOrdersSelects();
-  populateColaFromOrders();
-  // header user info
-  if(currentUser) {
-    $('userEmail').innerText = currentUser.email;
-    $('userRole').innerText = currentUser.role;
-    $('userInfo').classList.remove('hidden');
-  }
-}
+    function renderCart(){
+      if(!currentUser) return;
+      const key = `lc_cart_${currentUser.email}`;
+      const cart = load(key, []);
+      const out = $('carritoList');
+      out.innerHTML = '';
+      if(cart.length===0) { 
+        out.innerHTML='<li class="list-group-item tiny">Carrito vacío</li>'; 
+        return; 
+      }
+      cart.forEach(it=>{
+        const prod = load('lc_products', []).find(p=>p.id===it.id);
+        const li = document.createElement('li'); 
+        li.className='list-group-item d-flex justify-content-between align-items-center';
+        li.innerHTML = `
+          <div>${prod.name} x${it.qty}</div>
+          <div><button class="btn btn-sm btn-outline-danger rem">Quitar</button></div>`;
+        li.querySelector('.rem').addEventListener('click', ()=> {
+          const idx = cart.findIndex(c=>c.id===it.id); 
+          cart.splice(idx,1); 
+          save(key,cart); 
+          renderCart();
+        });
+        out.appendChild(li);
+      });
+    }
 
-// populate anulacion select options
-function populateAnulacionSelect(){
-  const sel = $('anulaPedidoSel'); sel.innerHTML = '<option value="">-- seleccionar --</option>';
-  const orders = load('lc_orders', []);
-  orders.filter(o=>o.status==='pendiente').forEach(o=>{
-    const opt = document.createElement('option'); opt.value = `${o.id}|${o.status}`; opt.textContent = `${o.id} — ${o.customer} — $${o.total.toLocaleString()}`;
-    sel.appendChild(opt);
-  });
-}
+    // Checkout -> create order
+    $('btnCheckout').addEventListener('click', ()=>{
+      if(!currentUser){ 
+        alert('Inicia sesión como cliente para confirmar pedido'); 
+        return; 
+      }
+      const key = `lc_cart_${currentUser.email}`;
+      const cart = load(key, []);
+      if(cart.length===0){ 
+        alert('Carrito vacío'); 
+        return; 
+      }
+      // create order
+      const orders = load('lc_orders', []);
+      const products = load('lc_products', []);
+      const id = 'ord' + Math.floor(Math.random()*9000+1000);
+      const items = cart.map(it => { 
+        const p = products.find(x=>x.id===it.id); 
+        return { id:p.id, name:p.name, qty:it.qty, price:p.price }; 
+      });
+      const total = items.reduce((s,i)=>s+i.price*i.qty,0);
+      const order = { 
+        id, 
+        customer: currentUser.email, 
+        items, 
+        total, 
+        status:'pendiente', 
+        created: nowISO() 
+      };
+      orders.push(order); 
+      save('lc_orders', orders);
+      // clear cart
+      save(key, []);
+      renderCart();
+      toast('Pedido creado: ' + id);
+      populateAllViews();
+      
+      // Mostrar sección de pago
+      $('seccionPago').classList.remove('hidden');
+      $('totalPago').textContent = `$${total.toLocaleString("es-CL")}`;
+    });
 
-// populate orders for assignments
-function populateOrdersSelects(){
-  const asig = $('asigPedido'); asig.innerHTML = '<option value="">-- seleccionar --</option>';
-  const orders = load('lc_orders', []);
-  orders.filter(o=>o.status==='pendiente' || o.status==='asignado').forEach(o=>{
-    const opt = document.createElement('option'); opt.value = o.id; opt.textContent = `${o.id} — ${o.customer} — ${o.status}`;
-    asig.appendChild(opt);
-  });
-}
+    // clear cart
+    $('btnClearCart').addEventListener('click', ()=>{
+      if(!currentUser) return;
+      save(`lc_cart_${currentUser.email}`, []);
+      renderCart();
+    });
 
-// initial render on load
-showSection('home');
-populateAllViews();
+    // render client's orders
+    function renderMyOrders(){
+      if(!currentUser) return;
+      const orders = load('lc_orders', []);
+      const mine = orders.filter(o=>o.customer===currentUser.email);
+      const ul = $('misPedidosList');
+      ul.innerHTML = '';
+      if(mine.length===0){ 
+        ul.innerHTML = '<li class="list-group-item tiny">No tienes pedidos</li>'; 
+        return; 
+      }
+      mine.forEach(o=>{
+        const li = document.createElement('li'); 
+        li.className='list-group-item';
+        li.innerHTML = `
+          <div><strong>${o.id}</strong> - <span class="tiny">${o.status}</span></div>
+          <div class="tiny">Total: $${o.total.toLocaleString()}</div>`;
+        // if pending, allow cancellation (opens anulacion)
+        if(o.status==='pendiente') {
+          const btn = document.createElement('button'); 
+          btn.className='btn btn-sm btn-outline-danger mt-2'; 
+          btn.textContent='Solicitar anulacion';
+          btn.onclick = ()=> { // preselect item in anulacion module
+            $('anulaPedidoSel').value = `${o.id}|pendiente`;
+            showSection('anulacion');
+          };
+          li.appendChild(btn);
+        }
+        ul.appendChild(li);
+      });
+    }
 
-// expose populateAllViews to console for debugging
-window.populateAllViews = populateAllViews;
+    // ---------- ANULACION LÓGICA ----------
+    $('btnAnularPedido').addEventListener('click', ()=>{
+      const sel = $('anulaPedidoSel').value;
+      if(!sel) { 
+        $('msgAnulacion').innerHTML = '<div class="alert alert-warning">Selecciona un pedido</div>'; 
+        return; 
+      }
+      const [orderId, status] = sel.split('|');
+      const motivo = $('anulaMotivoSel').value;
+      if(!motivo) { 
+        $('msgAnulacion').innerHTML = '<div class="alert alert-danger">Debe ingresar un motivo para anular</div>'; 
+        return; 
+      }
+      if(status === 'enviado') { 
+        $('msgAnulacion').innerHTML = '<div class="alert alert-danger">No se puede anular este pedido (ya enviado)</div>'; 
+        return; 
+      }
+      if(!confirm(`Confirma anular ${orderId}?\nMotivo: ${motivo}`)) { 
+        $('msgAnulacion').innerHTML = '<div class="alert alert-secondary">Cancelación de anulación: el pedido sigue activo</div>'; 
+        return; 
+      }
+      // perform annulation -> set order status cancelled and save motivo
+      const orders = load('lc_orders', []);
+      const idx = orders.findIndex(o=>o.id===orderId);
+      if(idx===-1){ 
+        $('msgAnulacion').innerHTML = '<div class="alert alert-danger">Pedido no encontrado</div>'; 
+        return; 
+      }
+      orders[idx].status = 'anulado';
+      save('lc_orders', orders);
+      // register anulacion record
+      const anul = load('lc_anulaciones', []);
+      anul.push({ orderId, motivo, fecha: nowISO(), by: currentUser ? currentUser.email : 'sistema' });
+      save('lc_anulaciones', anul);
+      $('msgAnulacion').innerHTML = `<div class="alert alert-success">Pedido ${orderId} anulado. Motivo: ${motivo}</div>`;
+      populateAllViews();
+    });
 
-</script>
+    // ---------- ORDENES / IMPRESION ----------
+    $('btnGenerarOrden').addEventListener('click', ()=>{
+      $('msgOrdenes').innerHTML = '';
+      const pendientes = Number($('pendientesCount').value);
+      const impresora = $('impresoraOk').checked;
+      if(pendientes <= 0){ 
+        $('msgOrdenes').innerHTML = '<div class="alert alert-warning">No hay pedidos para generar</div>'; 
+        return; 
+      }
+      if(!impresora){ 
+        $('msgOrdenes').innerHTML = '<div class="alert alert-danger">Error de impresión, revise la impresora</div>'; 
+        return; 
+      }
+      // simulate printing and register printed order
+      $('msgOrdenes').innerHTML = `<div class="alert alert-success">Orden impresa correctamente. Pedidos impresos: ${pendientes}</div>`;
+    });
+    $('btnImprimirLote').addEventListener('click', ()=> alert('Simulación: impresión en lote iniciada'));
+
+    // ---------- LISTA DE PEDIDOS (orden llegada) ----------
+    function populateColaFromOrders() {
+      const ul = $('colaPedidos'); 
+      ul.innerHTML = '';
+      const orders = load('lc_orders', []);
+      // pending orders, newest first (order by created desc)
+      const pend = orders.filter(o=>o.status==='pendiente').sort((a,b)=> new Date(b.created) - new Date(a.created));
+      if(pend.length===0){ 
+        ul.innerHTML='<li class="list-group-item tiny">No hay pedidos pendientes</li>'; 
+        return; 
+      }
+      pend.forEach(o=>{
+        const li = document.createElement('li');
+        li.className='list-group-item pedido-item';
+        li.innerHTML = `
+          <div><strong>${o.id}</strong> — ${o.customer} — $${o.total.toLocaleString()}</div>
+          <div><button class="btn btn-sm btn-success">Completar</button></div>`;
+        li.querySelector('button').addEventListener('click', ()=>{
+          // mark order as completado
+          const ordersAll = load('lc_orders', []);
+          const idx = ordersAll.findIndex(x=>x.id===o.id);
+          if(idx>-1){ 
+            ordersAll[idx].status='completado'; 
+            save('lc_orders', ordersAll); 
+            populateColaFromOrders(); 
+            populateAllViews(); 
+          }
+        });
+        ul.appendChild(li);
+      });
+    }
+    $('btnSimularPedido').addEventListener('click', ()=>{
+      // create random order and insert
+      const prods = load('lc_products', []);
+      const pick = prods[Math.floor(Math.random()*prods.length)];
+      const ords = load('lc_orders', []);
+      const id = 'ord' + Math.floor(Math.random()*9000+1000);
+      const order = { 
+        id, 
+        customer: `walkin@local`, 
+        items: [{id:pick.id, name:pick.name, qty:1, price:pick.price}], 
+        total: pick.price, 
+        status:'pendiente', 
+        created: nowISO() 
+      };
+      ords.push(order); 
+      save('lc_orders', ords);
+      populateColaFromOrders(); 
+      populateAllViews();
+    });
+    $('btnVaciarPedidos').addEventListener('click', ()=>{
+      // mark all pending as cancelled for demo
+      const ords = load('lc_orders', []);
+      ords.forEach(o=>{ if(o.status==='pendiente') o.status='cancelado'; });
+      save('lc_orders', ords);
+      populateColaFromOrders();
+    });
+
+    // ---------- ASIGNACION A REPARTIDORES ----------
+    $('btnAsignar').addEventListener('click', ()=>{
+      $('msgAsignacion').innerHTML='';
+      const pedidoVal = $('asigPedido').value;
+      const repartidor = $('asigRepartidor').value;
+      if(!pedidoVal){ 
+        $('msgAsignacion').innerHTML='<div class="alert alert-warning">Selecciona un pedido</div>'; 
+        return; 
+      }
+      // simulate coverage: r3 cannot serve pedido with id containing '002'
+      const orders = load('lc_orders', []);
+      const ord = orders.find(o=>o.id===pedidoVal);
+      if(!ord){ 
+        $('msgAsignacion').innerHTML='<div class="alert alert-danger">Pedido no encontrado</div>'; 
+        return; 
+      }
+      if(repartidor==='r3' && pedidoVal.includes('002')) { 
+        $('msgAsignacion').innerHTML='<div class="alert alert-danger">Pedido fuera de cobertura</div>'; 
+        return; 
+      }
+      // simulate no repartidores available if r3 selected (limited) -> show no disponibles
+      if(repartidor==='r3') { 
+        $('msgAsignacion').innerHTML='<div class="alert alert-warning">No hay repartidores disponibles</div>'; 
+        return; 
+      }
+      // assign
+      const assignments = load('lc_assignments', []);
+      assignments.push({ orderId: pedidoVal, repartidor, fecha:nowISO() });
+      save('lc_assignments', assignments);
+      // update order status
+      const idx = orders.findIndex(x=>x.id===pedidoVal); 
+      if(idx>-1){ 
+        orders[idx].status='asignado'; 
+        save('lc_orders', orders); 
+      }
+      $('msgAsignacion').innerHTML='<div class="alert alert-success">Asignación exitosa. Repartidor: '+repartidor+'</div>';
+      populateAllViews();
+    });
+
+    // ---------- CAJA VIRTUAL ----------
+    $('btnRegistrarCaja').addEventListener('click', ()=>{
+      $('msgCaja').innerHTML='';
+      const monto = Number($('cajaMonto').value);
+      const productos = $('cajaProductos').value.trim();
+      const datos = $('cajaPago').value.trim();
+      if(!monto || !productos || !datos) { 
+        $('msgCaja').innerHTML='<div class="alert alert-warning">Completa todos los campos</div>'; 
+        return; 
+      }
+      if(monto>500000){ 
+        $('msgCaja').innerHTML='<div class="alert alert-danger">Error al registrar venta, intente nuevamente</div>'; 
+        return; 
+      }
+      const caja = load('lc_caja', { saldo:0, ventas:[] });
+      caja.saldo = (caja.saldo||0) + monto;
+      caja.ventas.push({ monto, productos, datos, fecha: nowISO() });
+      save('lc_caja', caja);
+      $('msgCaja').innerHTML = `<div class="alert alert-success">Registro exitoso. Nuevo saldo: $${caja.saldo.toLocaleString()}</div>`;
+    });
+    $('btnRevisarCaja').addEventListener('click', ()=>{
+      const caja = load('lc_caja', { saldo:0, ventas:[] });
+      $('msgCaja').innerHTML = `<div class="alert alert-info">Saldo actual: $${caja.saldo.toLocaleString()} (Ventas: ${caja.ventas.length})</div>`;
+    });
+
+    // ---------- REPORTES y EXPORTACIÓN ----------
+    $('btnGenReporte').addEventListener('click', ()=>{
+      const periodo = $('repPeriodo').value;
+      const rango = $('repRango').value.trim();
+      if(!periodo || !rango){ 
+        alert('Selecciona período y rango'); 
+        return; 
+      }
+      let text = '';
+      if(periodo==='diario') text = `Reporte Diario (${rango}):\nTotal ventas: $1.200\nNº pedidos: 5\nProductos vendidos: 12`;
+      else if(periodo==='semanal') text = `Reporte Semana (${rango}):\nTotal ventas: $8.500\nNº pedidos: 32`;
+      else text = `Reporte Mes (${rango}):\nTotal ventas: $34.000\nNº pedidos: 120`;
+      $('salidaReporte').innerHTML = `<pre class="small">${text}</pre>`;
+    });
+    $('btnExport').addEventListener('click', ()=>{
+      $('msgExport').innerHTML='';
+      const fmt = $('exportFmt').value;
+      if(!fmt){ 
+        alert('Selecciona formato'); 
+        return; 
+      }
+      const hasReport = !!$('salidaReporte').innerHTML.trim();
+      if(!hasReport){ 
+        $('msgExport').innerHTML = '<div class="alert alert-danger">No hay datos para exportar</div>'; 
+        return; 
+      }
+      if(fmt==='pdf') $('msgExport').innerHTML = '<div class="alert alert-success">Archivo PDF generado con éxito (simulado)</div>';
+      else $('msgExport').innerHTML = '<div class="alert alert-success">Archivo XLSX generado con éxito (simulado)</div>';
+    });
+
+    // ---------- ESTADISTICAS ----------
+    $('btnVerEst').addEventListener('click', ()=>{
+      const periodo = $('estadPeriodo').value;
+      const cat = $('estadCat').value;
+      if(!periodo){ 
+        alert('Selecciona periodo'); 
+        return; 
+      }
+      if(periodo==='diario') $('salidaEst').innerHTML = `<div class="alert alert-info">Ingresos por día (ej): 01/09/2025 -> $1.200 | Pedidos: 5</div>`;
+      else $('salidaEst').innerHTML = `<div class="alert alert-info">Ingresos semanales del mes (ej): Semana1 $8.000, Semana2 $9.000</div>`;
+      if(cat!=='todas') $('salidaEst').innerHTML += `<div class="alert alert-warning mt-2">Filtrado por: ${cat}</div>`;
+    });
+
+    // ---------- PAGO ----------
+    $('btnPagar').addEventListener('click', ()=>{
+      const metodo = $('metodoPago').value;
+      const mensaje = $('mensajePago');
+      const totalCarrito = Number($('totalPago').textContent.replace('$', '').replace(/\./g, ''));
+
+      if (!metodo) {
+        mensaje.style.color = "red";
+        mensaje.textContent = "Debe seleccionar un método de pago.";
+      } else {
+        mensaje.style.color = "green";
+        mensaje.textContent = `Pago realizado con éxito mediante ${$('metodoPago').options[$('metodoPago').selectedIndex].text}. ¡Gracias por su compra!`;
+
+        // Registrar venta en la caja virtual
+        const caja = load('lc_caja', { saldo: 0, ventas: [] });
+        caja.saldo += totalCarrito;
+        caja.ventas.push({ 
+          monto: totalCarrito, 
+          productos: "Pedido del cliente", 
+          datos: metodo, 
+          fecha: nowISO() 
+        });
+        save('lc_caja', caja);
+
+        // Limpia el carrito tras el pago exitoso
+        save(`lc_cart_${currentUser.email}`, []);
+        $('carritoList').innerHTML = "";
+        $('msgCheckout').textContent = "";
+        $('seccionPago').classList.add('hidden');
+      }
+    });
+
+    // ---------- Helpers to populate various selects and lists ----------
+    function populateAllViews(){
+      // catalog
+      populateCatalog();
+      renderCart();
+      renderMyOrders();
+      populateAnulacionSelect();
+      populateOrdersSelects();
+      populateColaFromOrders();
+      // header user info
+      if(currentUser) {
+        $('userEmail').innerText = currentUser.email;
+        $('userRole').innerText = currentUser.role;
+        $('userInfo').classList.remove('hidden');
+      }
+    }
+
+    // populate anulacion select options
+    function populateAnulacionSelect(){
+      const sel = $('anulaPedidoSel'); 
+      sel.innerHTML = '<option value="">-- seleccionar --</option>';
+      const orders = load('lc_orders', []);
+      orders.filter(o=>o.status==='pendiente').forEach(o=>{
+        const opt = document.createElement('option'); 
+        opt.value = `${o.id}|${o.status}`; 
+        opt.textContent = `${o.id} — ${o.customer} — $${o.total.toLocaleString()}`;
+        sel.appendChild(opt);
+      });
+    }
+
+    // populate orders for assignments
+    function populateOrdersSelects(){
+      const asig = $('asigPedido'); 
+      asig.innerHTML = '<option value="">-- seleccionar --</option>';
+      const orders = load('lc_orders', []);
+      orders.filter(o=>o.status==='pendiente' || o.status==='asignado').forEach(o=>{
+        const opt = document.createElement('option'); 
+        opt.value = o.id; 
+        opt.textContent = `${o.id} — ${o.customer} — ${o.status}`;
+        asig.appendChild(opt);
+      });
+    }
+
+    // initial render on load
+    showSection('home');
+    populateAllViews();
+
+    // expose populateAllViews to console for debugging
+    window.populateAllViews = populateAllViews;
+  </script>
 </body>
 </html>
-
